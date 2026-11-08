@@ -16,7 +16,7 @@ data class NetworkConfig(
         }
 
     companion object {
-        const val PRODUCTION_BASE_URL = "https://listen-together.up.railway.app"
+        const val PRODUCTION_BASE_URL = "https://listen-together-backend-2o5j.onrender.com"
         const val LOCAL_DEV_BASE_URL = "http://10.0.2.2:8080"
         const val DEFAULT_BASE_URL = PRODUCTION_BASE_URL
     }

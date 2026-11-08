@@ -63,8 +63,8 @@ class ClockSyncTest {
     @Test
     fun `config maps base url to websocket url`() {
         assertEquals(
-            "wss://listen-together.up.railway.app/ws",
-            NetworkConfig("https://listen-together.up.railway.app/").webSocketUrl,
+            "wss://listen-together-backend-2o5j.onrender.com/ws",
+            NetworkConfig("https://listen-together-backend-2o5j.onrender.com/").webSocketUrl,
         )
         assertEquals(
             "ws://localhost:8080/ws",

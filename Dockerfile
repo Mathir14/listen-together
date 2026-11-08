@@ -1,11 +1,11 @@
 # Multi-stage Docker build for Listen Together backend
-# Stage 1: Build distribution with Temurin JDK 17
-FROM eclipse-temurin:17-jdk-jammy AS builder
+# Stage 1: Build distribution with official Gradle 8.13 image (avoids downloading Gradle at build time)
+FROM gradle:8.13-jdk17 AS builder
 
 WORKDIR /app
 
-# Copy gradle wrapper and build files
-COPY gradlew gradlew.bat settings.gradle.kts build.gradle.kts gradle.properties ./
+# Copy gradle build files
+COPY settings.gradle.kts build.gradle.kts gradle.properties ./
 COPY gradle ./gradle
 COPY build-logic ./build-logic
 
@@ -15,8 +15,8 @@ COPY core/model ./core/model
 COPY core/common ./core/common
 COPY backend ./backend
 
-# Build the distribution
-RUN chmod +x ./gradlew && ./gradlew :backend:installDist --no-daemon
+# Build the distribution using pre-installed Gradle
+RUN gradle :backend:installDist --no-daemon
 
 # Stage 2: Minimal runtime image
 FROM eclipse-temurin:17-jre-jammy
@@ -36,9 +36,9 @@ COPY --from=builder --chown=listentogether:listentogether /app/backend/build/ins
 USER listentogether
 
 ENV HOST=0.0.0.0
-ENV PORT=8080
+ENV PORT=10000
 
-EXPOSE 8080
+EXPOSE 10000
 
 HEALTHCHECK --interval=15s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:${PORT}/healthz || exit 1
