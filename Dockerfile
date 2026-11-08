@@ -1,6 +1,6 @@
 # Multi-stage Docker build for Listen Together backend
-# Stage 1: Build distribution with official Gradle 8.13 image (avoids downloading Gradle at build time)
-FROM gradle:8.13-jdk17 AS builder
+# Stage 1: Build distribution with official Gradle 8.13 on JDK 21 (matches jvmToolchain(21))
+FROM gradle:8.13-jdk21 AS builder
 
 WORKDIR /app
 
@@ -15,11 +15,11 @@ COPY core/model ./core/model
 COPY core/common ./core/common
 COPY backend ./backend
 
-# Build the distribution using pre-installed Gradle
+# Build the distribution using pre-installed Gradle on JDK 21
 RUN gradle :backend:installDist --no-daemon
 
-# Stage 2: Minimal runtime image
-FROM eclipse-temurin:17-jre-jammy
+# Stage 2: Minimal runtime image with JRE 21
+FROM eclipse-temurin:21-jre-jammy
 
 WORKDIR /app
 
