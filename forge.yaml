@@ -1,0 +1,14 @@
+version: '2.0'
+defaults:
+  adapter: opencode
+  model: opencode/deepseek-v4.1-flash-free
+  effort: max
+  timeout: 1800
+  auto_approve: true
+stages:
+  executor:
+    timeout: 2400
+execution:
+  mode: interactive
+  auto_commit: true
+  default_timeout: 1800

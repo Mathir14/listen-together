@@ -1,0 +1,19 @@
+# Build artifacts
+build/
+**/build/
+.gradle/
+.kotlin/
+
+# Local configs and caches
+local.properties
+.idea/
+*.iml
+.DS_Store
+
+# Android outputs
+*.apk
+*.aab
+
+# Forge and AI logs
+.forge/
+.ai/
